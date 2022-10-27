@@ -16,15 +16,17 @@ mark.txt, добавив атрибут в каждую строку.
 Нормативы на картинке
 Файл заполнить самостоятельно, в любом формате, минимум 10 строк
 """
-runners=[]
-with open("Задание 3.txt","r", encoding="utf-8") as myfile:
+from typing import List, Dict
+
+runners: list[dict[str, str | int | float]]=[]
+with open("run_of_60_m.txt","r", encoding="utf-8") as myfile:
     for line in myfile:
         l = line.split()        #разделяем строку по пробелам
-        # print("Бегун: ", l)
-        runner  = {            #создаем словарь и присваеваем значения
+        print("Бегун: ", l)
+        runner  = {             #создаем словарь и присваеваем значения
             "name":l[0],
             "sex":l[1],
-            "class":int(l[2]),
+            "class":l[2],
             "time":float(l[3])
         }
         runners.append(runner)
@@ -33,24 +35,105 @@ with open("Задание 3.txt","r", encoding="utf-8") as myfile:
 def bySex(x):
     return x["sex"]
 def isBoy(x):
-    return x["sex"] == "m"
+    return x["sex"] == "M"
 def isGirl(x):
-    return x["sex"] == "f"
-
+    return x["sex"] == "F"
 def time(x):
     return x["time"]
+def getMarks(runner):
+    if runner["class"] == "6" and runner["sex"] == "M":
+        if runner["time"] <= 9.9:
+            runner["mark"] = 5
+            return runner
+        elif runner["time"] <= 10.4:
+            runner["mark"] = 4
+            return runner
+        elif runner["time"] <= 11.1:
+            runner["mark"] = 3
+            return runner
+        else:
+            runner["mark"] = 2
+            return runner
+    elif runner["class"] == "7" and runner["sex"] == "M":
+        if runner["time"] <= 9.4:
+            runner["mark"] = 5
+            return runner
+        elif runner["time"] <= 10.2:
+            runner["mark"] = 4
+            return runner
+        elif runner["time"] <= 11.0:
+            runner["mark"] = 3
+            return runner
+        else:
+            runner["mark"] = 2
+            return runner
+    elif runner["class"] == "6" and runner["sex"] == "F":
+        if runner["time"] <= 10.3:
+            runner["mark"] = 5
+            return runner
+        elif runner["time"] <= 10.6:
+            runner["mark"] = 4
+            return runner
+        elif runner["time"] <= 11.2:
+            runner["mark"] = 3
+            return runner
+        else:
+            runner["mark"] = 2
+            return runner
+    elif runner["class"] == "7" and runner["sex"] == "F":
+        if runner["time"] <= 9.8:
+            runner["mark"] = 5
+            return runner
+        elif runner["time"] <= 10.6:
+            runner["mark"] = 4
+            return runner
+        elif runner["time"] <= 11.4:
+            runner["mark"] = 3
+            return runner
+        else:
+            runner["mark"] = 2
+            return runner
 
 
 girls = list(filter(isGirl,runners))
-print(girls)
+boys = list(filter(isBoy,runners))
 
-skorost = list(filter(time,runners))
-print(skorost)
-print("самый быстрый"+ str(skorost[-1:]))
+print("Девочки"+("="*60))
+print(*girls, sep="\n")
+print("Мальчики"+"="*59)
+print(*boys, sep="\n")
 
-def normativ(x):
-    if runner[class] == 7 and runner[sex] == "m":
-        if runner[time] > 8:\
-        [ocenka]
+print(" ")
+print("*"*68)
+print(" ")
 
-print()
+
+girls.sort(key=time)
+boys.sort(key=time)
+dict_girls = girls[0]
+dict_boys = boys[0]
+
+print("Самая быстрая девочка: "+
+      "\n\t\tфамилия: "+ str(dict_girls['name'])+
+      "\n\t\tкласс: "+ str(dict_girls['class'])+
+      "\n\t\tвремя: "+ str(dict_girls['time'])
+      )
+print("Самый быстрый мальчик: "+
+      "\n\t\tфамилия: "+ str(dict_boys['name'])+
+      "\n\t\tкласс: "+ str(dict_boys['class'])+
+      "\n\t\tвремя: "+ str(dict_boys['time'])
+      )
+
+
+
+runnersMarked = list(map(getMarks,runners))
+
+
+with open("marked.txt","w",encoding="UTF-8") as myfile2:
+    for runner in runnersMarked:
+        myfile2.write("{:25}".format(" ".join([runner["name"],
+                runner["sex"],
+                runner["class"],
+                str(runner["time"])])) +
+                str("Оценка: ") +
+                str(runner["mark"])+"\n")

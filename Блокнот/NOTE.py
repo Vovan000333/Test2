@@ -27,11 +27,11 @@ name.csv
 по различным критериям (Дата, время, Приоритет, Номер, Статус)
 """
 notes =[]
-with open("note.csv","r", encoding="utf-8") as f:
+with open("../ЛАБ_3/run_of_60_m.txt", "r", encoding="utf-8") as f:
     for line in f:
         l = line.split(',')
         note = {
-            "id":int(l[0]),
+            "id":l[0],
             "task":l[1],
             "time":l[2],
             "date":l[3],
