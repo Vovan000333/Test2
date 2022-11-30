@@ -8,6 +8,6 @@ def root():
 
 @app.route("/user",methods=['GET'])
 def user():
-    name = "Владимир"
+    name = "Роман Кеняйкин"
     marks = [5,4,3,4,5,5]
     return render_template('user.html',name = name,marks = marks)

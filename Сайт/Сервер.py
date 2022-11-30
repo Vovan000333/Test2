@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/",methods=['GET'])
 def root():
-    return "<h1>Привет, я сервер </h1>"
+    return "<h1>Привет, я сервер Ромы </h1>"
 
 @app.route("/summ/<arg1>/<arg2>",methods=['GET'])
 def summ(arg1,arg2):
